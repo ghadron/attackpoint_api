@@ -16,7 +16,10 @@ try_login <- function(username, password) {
   remDr$getCurrentUrl() == "https://www.attackpoint.org/"
 }
 
-do_add_training <- function(time, date = NULL, session = NULL, workout = "Training", intensity = 3, distance = NULL, climb = NULL, avg_hr = NULL, max_hr = NULL, desc = NULL) {
+do_add_training <- 
+  function(time, date = NULL, session = NULL, workout = "Training",
+           intensity = 3, distance = NULL, climb = NULL, avg_hr = NULL,
+           max_hr = NULL, desc = NULL) {
   remDr$navigate("https://www.attackpoint.org/newtraining.jsp")
   
   # Set the time of the session
@@ -29,10 +32,10 @@ do_add_training <- function(time, date = NULL, session = NULL, workout = "Traini
   remDr$findElement("xpath", workout_option)$clickElement()
   
   # Set the distance of the session
-  remDr$findElement("name", "distance")$
+  remDr$findElement(using = "name", "distance")$
     sendKeysToElement(list(toString(distance)))
   
-  remDr$findElement(using = "xpath", "/html/body/div[1]/div[4]/form/p[3]/input")$
+  remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/p[3]/input")$
     clickElement()
 }
 

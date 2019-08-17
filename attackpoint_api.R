@@ -28,7 +28,13 @@ init_attackpoint <- function(username, password, docker_port = 4445L) {
 #' password: copper12
 #'
 
-add_training <- function(time, date = NULL, session = NULL, workout = "Training", intensity = 3, distance = NULL, climb = NULL, avg_hr = NULL, max_hr = NULL, description = NULL) {
-  do_add_training(time, workout = workout)
+add_training <-
+  function(time, date = NULL, session = NULL, workout = "Training", 
+           intensity = 3, distance = NULL, climb = NULL, avg_heart_rate = NULL,
+           max_heart_rate = NULL, description = NULL) {
+  do_add_training(time, date = date, session = session, workout = workout, 
+                  intensity = intensity, distance = distance, climb = climb, 
+                  avg_hr = avg_heart_rate, max_hr = max_heart_rate, 
+                  desc = description)
 }
 
