@@ -1,4 +1,5 @@
 library(RSelenium)
+library(magrittr)
 
 source("ap_selenium.R")
 
@@ -17,7 +18,7 @@ init_attackpoint <- function(username, password, docker_port = 4445L) {
   if(missing(username) || is.null(username)) error("username required")
   if(missing(password) || is.null(password)) error("password required")
   
-  init_rem_dr(docker_port)
+  init_remDr(docker_port)
   
   if(try_login(username, password)) username
   else "Login Fail"
@@ -28,6 +29,6 @@ init_attackpoint <- function(username, password, docker_port = 4445L) {
 #'
 
 add_training <- function(time, date = NULL, session = NULL, workout = "Training", intensity = 3, distance = NULL, climb = NULL, avg_hr = NULL, max_hr = NULL, description = NULL) {
-  do_add_training(time)
+  do_add_training(time, workout = workout)
 }
 
