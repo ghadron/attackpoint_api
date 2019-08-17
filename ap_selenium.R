@@ -32,8 +32,24 @@ do_add_training <-
   remDr$findElement("xpath", workout_option)$clickElement()
   
   # Set the distance of the session
-  remDr$findElement(using = "name", "distance")$
+  remDr$findElement("name", "distance")$
     sendKeysToElement(list(toString(distance)))
+  
+  # Set the climb of the session
+  remDr$findElement("name", "climb")$
+    sendKeysToElement(list(toString(climb)))
+  
+  # Set average heart rate of the session
+  remDr$findElement("name", "ahr")$
+    sendKeysToElement(list(toString(avg_hr)))
+  
+  # Set max heart rate of the session
+  remDr$findElement("name", "mhr")$
+    sendKeysToElement(list(toString(max_hr)))
+  
+  # Set the description of the session
+  remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/textarea")$
+    sendKeysToElement(list(toString(desc)))
   
   remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/p[3]/input")$
     clickElement()
