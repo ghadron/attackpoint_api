@@ -26,10 +26,15 @@ do_add_training <-
   remDr$findElement("name", "sessionlength")$
     sendKeysToElement(list(toString(time)))
   
-  # Set the session workout type
+  # Set the session's workout type
   workout_option <- paste0("//select[@id = 'workouttypeid']/option[@value = '", 
                            get_workout_id(workout), "']", sep = "")
   remDr$findElement("xpath", workout_option)$clickElement()
+  
+  # Set the intenisty of the session
+  intensity_option <- paste0("//select[@id = 'intensity']/option[@value = '", 
+                             intensity, "']", sep = "")
+  remDr$findElement("xpath", intensity_option)$clickElement()
   
   # Set the distance of the session
   remDr$findElement("name", "distance")$
