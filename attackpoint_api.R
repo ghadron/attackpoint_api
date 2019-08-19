@@ -2,6 +2,7 @@ library(RSelenium)
 library(magrittr)
 
 source("ap_selenium.R")
+source("add_training.R")
 
 #' Initializes a session in a user's account on Attackpoint by attempting to 
 #' login. If this succedes the username is returned if it fails then "Login
@@ -29,12 +30,12 @@ init_attackpoint <- function(username, password, docker_port = 4445L) {
 #'
 
 add_training <-
-  function(time, date = NULL, session = NULL, workout = "Training", 
+  function(duration, date = NULL, time = NULL, workout = "Training", 
            intensity = 3, distance = NULL, climb = NULL, avg_heart_rate = NULL,
            max_heart_rate = NULL, description = NULL) {
-  do_add_training(time, date = date, session = session, workout = workout, 
-                  intensity = intensity, distance = distance, climb = climb, 
-                  avg_hr = avg_heart_rate, max_hr = max_heart_rate, 
-                  desc = description)
+  try_add_training(duration, date = date, time = time, workout = workout, 
+               intensity = intensity, dist = distance, climb = climb, 
+               avg_hr = avg_heart_rate, max_hr = max_heart_rate, 
+               desc = description)
 }
 
