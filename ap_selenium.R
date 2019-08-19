@@ -1,3 +1,4 @@
+
 init_remDr <- function(docker_port = 4445L) {
   init_remDr <- remoteDriver(remoteServerAddr = "localhost", 
                               port = docker_port, browserName = "firefox")
@@ -22,19 +23,33 @@ do_add_training <-
            max_hr = NULL, desc = NULL) {
   remDr$navigate("https://www.attackpoint.org/newtraining.jsp")
   
+  # Set the date of the session
+  month_option_xpath <- 
+    paste0("/html/body/div[1]/div[4]/form/select[1]/option[@value = '", 
+          format(as.Date(date), "%m"), "']")
+  remDr$findElement("xpath", month_option_xpath)$clickElement()
+  day_option_xpath <-
+    paste0("/html/body/div[1]/div[4]/form/select[2]/option[@value = '", 
+           format(as.Date(date), "%d"), "']")
+  remDr$findElement("xpath", day_option_xpath)$clickElement()
+  remDr$findElement("name", "session-year")$
+    sendKeysToElement(list(format(as.Date(date), "%Y")))
+    
   # Set the time of the session
   remDr$findElement("name", "sessionlength")$
     sendKeysToElement(list(toString(time)))
   
   # Set the session's workout type
-  workout_option <- paste0("//select[@id = 'workouttypeid']/option[@value = '", 
-                           get_workout_id(workout), "']", sep = "")
-  remDr$findElement("xpath", workout_option)$clickElement()
+  workout_option_xpath <-
+    paste0("//select[@id = 'workouttypeid']/option[@value = '", 
+           get_workout_id(workout), "']", sep = "")
+  remDr$findElement("xpath", workout_option_xpath)$clickElement()
   
   # Set the intenisty of the session
-  intensity_option <- paste0("//select[@id = 'intensity']/option[@value = '", 
-                             intensity, "']", sep = "")
-  remDr$findElement("xpath", intensity_option)$clickElement()
+  intensity_option_xpath <- 
+    paste0("//select[@id = 'intensity']/option[@value = '", intensity, "']", 
+           sep = "")
+  remDr$findElement("xpath", intensity_option_xpath)$clickElement()
   
   # Set the distance of the session
   remDr$findElement("name", "distance")$
