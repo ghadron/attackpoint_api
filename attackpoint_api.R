@@ -15,7 +15,8 @@ source("add_training.R")
 #' @export
 #' 
 #' @examples
-init_attackpoint <- function(username, password, docker_port = 4445L) {
+init_attackpoint <- function(username, password, docker_port = 4445L,
+                             browser_name = "firefox") {
   if(missing(username) || is.null(username)) error("username required")
   if(missing(password) || is.null(password)) error("password required")
   
