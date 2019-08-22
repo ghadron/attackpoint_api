@@ -4,6 +4,7 @@
 #' @param duration A Number 
 #' @param date A Date
 #' @param time A Number between 0 and 23
+#' @param act A String
 #' @param workout A String of a Valid Attackpoint Workout
 #' @param intensity A Number between 0 and 5
 #' @param dist A Number
@@ -15,7 +16,7 @@
 #' @examples
 #' 
 try_add_training <- 
-  function(duration, date = NULL, time = NULL, workout = "Training",
+  function(duration, date = NULL, time = NULL, act = NULL, workout = "Training", 
            intensity = 3, dist = NULL, climb = NULL, avg_hr = NULL, 
            max_hr = NULL, desc = NULL) {
     remDr$navigate("https://www.attackpoint.org/newtraining.jsp")
@@ -23,6 +24,7 @@ try_add_training <-
     set_duration(duration)
     set_date(date)
     set_time(time)
+    set_act(act)
     set_workout(workout)
     set_intensity(intensity)
     set_dist(dist)
@@ -50,14 +52,17 @@ set_duration <- function(duration) {
 #' 
 set_date <- function(date) {
   if(is.null(date))return()
+  
   month_option_xpath <- 
     paste0("//select[@id = 'session-month']/option[@value = '", 
            format(as.Date(date), "%m"), "']", sep = "")
   remDr$findElement("xpath", month_option_xpath)$clickElement()
+  
   day_option_xpath <-
     paste0("//select[@id = 'session-day']/option[@value = '", 
            format(as.Date(date), "%d"), "']", sep = "")
   remDr$findElement("xpath", day_option_xpath)$clickElement()
+  
   remDr$findElement("name", "session-year")$
     sendKeysToElement(list(format(as.Date(date), "%Y")))
 }
@@ -67,11 +72,39 @@ set_date <- function(date) {
 #' @param time A Number between 0 and 23
 #' 
 set_time <- function(time) {
-  if(is.null(time))return();
+  if(is.null(time))return()
+  
   time_option_xpath <- 
     paste0("//select[@id = 'sessionstarthour']/option[@value = '", 
            toString(time), "']", sep = "")
   remDr$findElement("xpath", time_option_xpath)$clickElement()
+}
+
+#' Inputs the activity/sport of the session
+#'
+#' @param act A String
+#'
+set_act <- function(act) {
+  if(is.null(act))return()
+  
+  option_pos <- 1
+  act_select_xpath <- "//select[@id = 'activitytypeid']/option["
+  act_type <- 
+    remDr$findElement("xpath", paste(act_select_xpath, option_pos, "]"))
+  
+  while (act_type$getElementText() != "New Type (enter here-->)") {
+    
+    if (act_type$getElementText() == act) {
+      act_type$clickElement()
+      return()
+    }
+    
+    option_pos <- option_pos + 1
+    act_type <- 
+      remDr$findElement("xpath", paste(act_select_xpath, option_pos, "]"))
+  }
+  
+  stop(paste(act, "is not a set activity"))
 }
 
 #' Inputs the workout type of the session
@@ -80,7 +113,7 @@ set_time <- function(time) {
 #' 
 set_workout <- function(workout) {
   workout_option_xpath <-
-    paste0("//select[@id = 'workouttypeid']/option[@value = '", 
+    paste0("//select[@id = 'workouttypeid']/option[@value = '",
            get_workout_id(workout), "']", sep = "")
   remDr$findElement("xpath", workout_option_xpath)$clickElement()
 }
@@ -144,7 +177,7 @@ set_avg_hr <- function(avg_hr) {
 #' 
 #' @param max_hr A Number
 #' 
-set_max_hr <- function(max_hr){
+set_max_hr <- function(max_hr) {
   remDr$findElement("name", "mhr")$
     sendKeysToElement(list(toString(max_hr)))
 }

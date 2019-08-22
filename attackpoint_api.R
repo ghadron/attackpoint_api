@@ -31,12 +31,12 @@ init_attackpoint <- function(username, password, docker_port = 4445L,
 #'
 
 add_training <-
-  function(duration, date = NULL, time = NULL, workout = "Training", 
-           intensity = 3, distance = NULL, climb = NULL, avg_heart_rate = NULL,
-           max_heart_rate = NULL, description = NULL) {
-  try_add_training(duration, date = date, time = time, workout = workout, 
-               intensity = intensity, dist = distance, climb = climb, 
-               avg_hr = avg_heart_rate, max_hr = max_heart_rate, 
-               desc = description)
+  function(duration, date = NULL, time = NULL, activity = NULL, 
+           workout = "Training", intensity = 3, distance = NULL, climb = NULL, 
+           avg_heart_rate = NULL, max_heart_rate = NULL, description = NULL) {
+  try_add_training(duration, date = date, time = time, act = activity, 
+                   workout = workout, intensity = intensity, dist = distance, 
+                   climb = climb, avg_hr = avg_heart_rate, 
+                   max_hr = max_heart_rate, desc = description)
 }
 
