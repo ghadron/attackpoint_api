@@ -1,4 +1,3 @@
-
 #' Fills out the "Add Training" form on Attackpoint
 #'
 #' @param duration A Number 
@@ -11,14 +10,22 @@
 #' @param climb A Number
 #' @param avg_hr A Number
 #' @param max_hr A Number
+#' @param rest_hr A Number
+#' @param sleep A Number
+#' @param weight A Number
+#' @param is_inj A Boolean
+#' @param is_sick A Boolean
+#' @param is_rest_day A Boolean
 #' @param desc A String with simple HTML 
 #'
 #' @examples
 #' 
-try_add_training <- 
-  function(duration, date = NULL, time = NULL, act = NULL, workout = "Training", 
-           intensity = 3, dist = NULL, climb = NULL, avg_hr = NULL, 
-           max_hr = NULL, desc = NULL) {
+try_add_training <- function(duration, date = NULL, time = NULL, act = NULL, 
+                             workout = "Training", intensity = 3, dist = NULL, 
+                             climb = NULL, avg_hr = NULL, max_hr = NULL, 
+                             rest_hr = NULL, sleep = NULL, weight = NULL, 
+                             is_inj = FALSE, is_sick = FALSE, 
+                             is_rest_day = FALSE, desc = NULL) {
     remDr$navigate("https://www.attackpoint.org/newtraining.jsp")
     
     set_duration(duration)
@@ -31,6 +38,12 @@ try_add_training <-
     set_climb(climb)
     set_avg_hr(avg_hr)
     set_max_hr(max_hr)
+    set_rest_hr(rest_hr)
+    set_sleep(sleep)
+    set_weight(weight)
+    set_injured(is_inj)
+    set_sick(is_sick)
+    set_rest_day(is_rest_day)
     set_desc(desc)
     
     remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/p[3]/input")$
@@ -180,6 +193,57 @@ set_avg_hr <- function(avg_hr) {
 set_max_hr <- function(max_hr) {
   remDr$findElement("name", "mhr")$
     sendKeysToElement(list(toString(max_hr)))
+}
+
+#' Inputs the resting heart rate
+#'
+#' @param rest_hr A Number
+#'
+set_rest_hr <- function(rest_hr) {
+  remDr$findElement("name", "rhr")$
+    sendKeysToElement(list(toString(rest_hr)))
+}
+
+#' Inputs of the sleep on the day of the session
+#' 
+#' @param sleep A Number
+#' 
+set_sleep <- function(sleep) {
+  remDr$findElement("name", "sleep")$
+    sendKeysToElement(list(toString(sleep)))
+}
+
+#' Inputs of the weight on the day of the session
+#' 
+#' @param weight A Number
+#' 
+set_weight <- function(weight) {
+  remDr$findElement("name", "weight")$
+    sendKeysToElement(list(toString(weight)))
+}
+
+#' Checks off injured checkbox if true
+#' 
+#' @param is_inj A Boolean
+#' 
+set_injured <- function(is_inj) {
+  if (isTRUE(is_inj))remDr$findElement("name", "injured")$clickElement()
+}
+
+#' Checks off sick checkbox if true
+#' 
+#' @param is_sick A Boolean
+#' 
+set_sick <- function(is_sick) {
+  if (isTRUE(is_sick))remDr$findElement("name", "sick")$clickElement()
+}
+
+#' Checks off rest day checkbox if true
+#' 
+#' @param is_rest_day A Boolean
+#' 
+set_rest_day <- function(is_rest_day) {
+  if (isTRUE(is_rest_day))remDr$findElement("name", "restday")$clickElement()
 }
 
 #' Inputs the description of the session
