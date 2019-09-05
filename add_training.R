@@ -64,7 +64,7 @@ set_duration <- function(duration) {
 #' @param date A Date
 #' 
 set_date <- function(date) {
-  if(is.null(date))return()
+  if(is.null(date) | is.na(date))return()
   
   month_option_xpath <- 
     paste0("//select[@id = 'session-month']/option[@value = '", 

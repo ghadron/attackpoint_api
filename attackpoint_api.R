@@ -3,6 +3,7 @@ library(magrittr)
 
 source("ap_selenium.R")
 source("add_training.R")
+source("add_shoes.R")
 
 #' username: Hadron Helper
 #' password: copper12
@@ -64,5 +65,12 @@ add_training <- function(duration, date = NULL, time = NULL, activity = NULL,
                    sleep = sleep, weight = weight, is_injured = is_injured, 
                    is_sick = is_sick, is_rest_day = is_rest_day, 
                    desc = description)
+}
+
+add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0, 
+                      is_retired = FALSE) {
+  try_add_shoes(shoe_name = shoe_name, new_date = new_date, 
+                init_miles = init_miles, is_retired = is_retired)
+  
 }
 

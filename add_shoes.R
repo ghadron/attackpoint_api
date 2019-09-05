@@ -1,0 +1,33 @@
+try_add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0, 
+                          is_retired = FALSE) {
+  remDr$findElement("name", "name")$sendKeysToElement(list(toString(shoe_name)))
+  set_new_date(new_date)
+  set_init_miles(init_miles)
+  if(isTRUE(is_retired))remDr$findElement("name", "retired")$clickElement()
+}
+
+set_new_date <- function(new_date) {
+  if(is.null(new_date) | is.na(new_date))return()
+  
+  month_option_xpath <- 
+    paste0("//select[@id = 'datenew-month']/option[@value = '", 
+           format(as.Date(new_date), "%m"), "']", sep = "")
+  remDr$findElement("xpath", month_option_xpath)$clickElement()
+  
+  day_option_xpath <- 
+    paste0("//select[@id = 'datenew-day']/option[@value = '",
+           formate(as.Date(new_date), "%m"), "']", sep = "")
+  remDr$findElement("xpath", day_option_xpath)$clickElement()
+  
+  remDr$findElement("name", "datenew-year")$
+    sendKeysToElement(list(toString(as.Date(new_date), "%Y")))
+}
+
+set_init_miles <- function(init_miles) {
+  if (!(length(init_miles) > 0 & is.numeric(init_miles))) {
+    stop(paste(init_miles, "is not a number"))
+  } else if (init_miles < 0)stop(paste(init_miles, "is not positive"))
+  
+  remDr$findElement("name", "initialmiles")$sendKeysToElement(init_miles)
+}
+
