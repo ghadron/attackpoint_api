@@ -67,6 +67,15 @@ add_training <- function(duration, date = NULL, time = NULL, activity = NULL,
                    desc = description)
 }
 
+#' Fills out the "Add/Edit Shoes" form for adding a new pair of shoes
+#'
+#' @param shoe_name A String
+#' @param new_date A Date
+#' @param init_miles A Number >= 0
+#' @param is_retired A Boolean
+#'
+#' @examples 
+#'
 add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0, 
                       is_retired = FALSE) {
   try_add_shoes(shoe_name = shoe_name, new_date = new_date, 
