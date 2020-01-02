@@ -7,8 +7,13 @@
 #' @param browser_name A String
 #' 
 init_remDr <- function(docker_port = 4445L, browser_name = "firefox") {
-  init_remDr <- remoteDriver(remoteServerAddr = "localhost", 
-                             port = docker_port, browserName = browser_name)
+  init_remDr <- remoteDriver(
+    remoteServerAddr = "localhost", 
+    port = docker_port, 
+    browserName = browser_name,
+    browser.download.dir = "~/Projects/Programs/attackpoint_api/training_csv/"
+    browser.helperApps.neverAsk.saveToDisk = "csv")
+  
   init_remDr$open()
   remDr <<- init_remDr
 }

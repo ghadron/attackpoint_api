@@ -5,6 +5,7 @@ source("ap_selenium.R")
 source("add_training.R")
 source("add_shoes.R")
 
+#' docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
 #' username: Hadron Helper
 #' password: copper12
 
@@ -49,6 +50,8 @@ init_attackpoint <- function(username, password, docker_port = 4445L,
 #' @param is_sick A Boolean
 #' @param is_rest_day A Boolean
 #' @param description A String with simple HTML
+#' 
+#' @examples
 #'
 add_training <- function(duration, date = NULL, time = NULL, activity = NULL, 
                          workout = "Training", intensity = 3, distance = NULL, 

@@ -18,6 +18,11 @@ try_add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0,
     clickElement()
 }
 
+# try_edit_shoes <- function(shoe_name, new_date = NULL, init_miles, 
+#                            is_retired=FALSE) {
+#   
+# }
+
 #' Sets the shoes new date
 #' 
 #' @param new_date A Date
