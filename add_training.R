@@ -1,7 +1,7 @@
 #' Fills out the "Add Training" form on Attackpoint
 #'
 #' @param duration A Number 
-#' @param date A Date
+#' @param date A Date with formatting "%Y-%m-%d"
 #' @param time A Number between 0 and 23
 #' @param act A String
 #' @param workout A String of a Valid Attackpoint Workout
@@ -20,31 +20,43 @@
 #'
 #' @examples
 #' 
-try_add_training <- function(duration, date = NULL, time = NULL, act = NULL, 
-                             workout = "Training", intensity = 3, dist = NULL, 
-                             climb = NULL, avg_hr = NULL, max_hr = NULL, 
-                             rest_hr = NULL, sleep = NULL, weight = NULL, 
-                             is_inj = FALSE, is_sick = FALSE, 
-                             is_rest_day = FALSE, desc = NULL) {
+try_add_training <- function(remDr,
+                             duration, 
+                             date = NULL, 
+                             time = NULL, 
+                             act = NULL, 
+                             workout = "Training",
+                             intensity = 3, 
+                             dist = NULL, 
+                             climb = NULL, 
+                             avg_hr = NULL, 
+                             max_hr = NULL, 
+                             rest_hr = NULL, 
+                             sleep = NULL, 
+                             weight = NULL, 
+                             is_inj = FALSE, 
+                             is_sick = FALSE, 
+                             is_rest_day = FALSE, 
+                             desc = NULL) {
     remDr$navigate("https://www.attackpoint.org/newtraining.jsp")
     
-    set_duration(duration)
-    set_date(date)
-    set_time(time)
-    set_act(act)
-    set_workout(workout)
-    set_intensity(intensity)
-    set_dist(dist)
-    set_climb(climb)
-    set_avg_hr(avg_hr)
-    set_max_hr(max_hr)
-    set_rest_hr(rest_hr)
-    set_sleep(sleep)
-    set_weight(weight)
-    set_injured(is_inj)
-    set_sick(is_sick)
-    set_rest_day(is_rest_day)
-    set_desc(desc)
+    set_duration(remDr, duration)
+    set_date(remDr, date)
+    set_time(remDr, time)
+    set_act(remDr, act)
+    set_workout(remDr, workout)
+    set_intensity(remDr, intensity)
+    set_dist(remDr, dist)
+    set_climb(remDr, climb)
+    set_avg_hr(remDr, avg_hr)
+    set_max_hr(remDr, max_hr)
+    set_rest_hr(remDr, rest_hr)
+    set_sleep(remDr, sleep)
+    set_weight(remDr, weight)
+    set_injured(remDr, is_inj)
+    set_sick(remDr, is_sick)
+    set_rest_day(remDr, is_rest_day)
+    set_desc(remDr, desc)
     
     remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/p[3]/input")$
       clickElement()
@@ -54,16 +66,16 @@ try_add_training <- function(duration, date = NULL, time = NULL, act = NULL,
 #'
 #' @param duration A Number
 #'
-set_duration <- function(duration) {
+set_duration <- function(remDr, duration) {
   remDr$findElement("name", "sessionlength")$
     sendKeysToElement(list(toString(duration)))
 }
 
 #' Inputs the date of the session
 #' 
-#' @param date A Date
+#' @param date A Date with the formatting "%Y-%m-%d"
 #' 
-set_date <- function(date) {
+set_date <- function(remDr, date) {
   if(is.null(date) | is.na(date))return()
   
   month_option_xpath <- 
@@ -84,7 +96,7 @@ set_date <- function(date) {
 #' 
 #' @param time A Number between 0 and 23
 #' 
-set_time <- function(time) {
+set_time <- function(remDr, time) {
   if(is.null(time))return()
   
   time_option_xpath <- 
@@ -97,7 +109,7 @@ set_time <- function(time) {
 #'
 #' @param act A String
 #'
-set_act <- function(act) {
+set_act <- function(remDr, act) {
   if(is.null(act))return()
   
   option_pos <- 1
@@ -124,7 +136,7 @@ set_act <- function(act) {
 #' 
 #' @param workout A String of a Valid Attackpoint Workout 
 #' 
-set_workout <- function(workout) {
+set_workout <- function(remDr, workout) {
   workout_option_xpath <-
     paste0("//select[@id = 'workouttypeid']/option[@value = '",
            get_workout_id(workout), "']", sep = "")
@@ -135,7 +147,7 @@ set_workout <- function(workout) {
 #' 
 #' @param workout A String of a Valid Attackpoint Workout
 #' 
-get_workout_id <- function(workout) {
+get_workout_id <- function(remDr, workout) {
   workout <- tolower(workout)
   if(workout == "training")return("1")
   else if(workout == "race")return("2")
@@ -152,7 +164,7 @@ get_workout_id <- function(workout) {
 #' 
 #' @param intensity A Number between 0 and 5
 #' 
-set_intensity <- function(intensity) {
+set_intensity <- function(remDr, intensity) {
   intensity_option_xpath <- 
     paste0("//select[@id = 'intensity']/option[@value = '", intensity, "']", 
            sep = "")
@@ -163,7 +175,7 @@ set_intensity <- function(intensity) {
 #'
 #' @param dist A Number
 #'
-set_dist <- function(dist) {
+set_dist <- function(remDr, dist) {
   remDr$findElement("name", "distance")$
     sendKeysToElement(list(toString(dist)))
 }
@@ -172,7 +184,7 @@ set_dist <- function(dist) {
 #' 
 #' @param climb A Number
 #' 
-set_climb <- function(climb) {
+set_climb <- function(remDr, climb) {
   remDr$findElement("name", "climb")$
     sendKeysToElement(list(toString(climb)))
 }
@@ -181,7 +193,7 @@ set_climb <- function(climb) {
 #' 
 #' @param avr_hr A Number
 #' 
-set_avg_hr <- function(avg_hr) {
+set_avg_hr <- function(remDr, avg_hr) {
   remDr$findElement("name", "ahr")$
     sendKeysToElement(list(toString(avg_hr)))
 }
@@ -190,7 +202,7 @@ set_avg_hr <- function(avg_hr) {
 #' 
 #' @param max_hr A Number
 #' 
-set_max_hr <- function(max_hr) {
+set_max_hr <- function(remDr, max_hr) {
   remDr$findElement("name", "mhr")$
     sendKeysToElement(list(toString(max_hr)))
 }
@@ -199,7 +211,7 @@ set_max_hr <- function(max_hr) {
 #'
 #' @param rest_hr A Number
 #'
-set_rest_hr <- function(rest_hr) {
+set_rest_hr <- function(remDr, rest_hr) {
   remDr$findElement("name", "rhr")$
     sendKeysToElement(list(toString(rest_hr)))
 }
@@ -208,7 +220,7 @@ set_rest_hr <- function(rest_hr) {
 #' 
 #' @param sleep A Number
 #' 
-set_sleep <- function(sleep) {
+set_sleep <- function(remDr, sleep) {
   remDr$findElement("name", "sleep")$
     sendKeysToElement(list(toString(sleep)))
 }
@@ -217,7 +229,7 @@ set_sleep <- function(sleep) {
 #' 
 #' @param weight A Number
 #' 
-set_weight <- function(weight) {
+set_weight <- function(remDr, weight) {
   remDr$findElement("name", "weight")$
     sendKeysToElement(list(toString(weight)))
 }
@@ -226,7 +238,7 @@ set_weight <- function(weight) {
 #' 
 #' @param is_inj A Boolean
 #' 
-set_injured <- function(is_inj) {
+set_injured <- function(remDr, is_inj) {
   if (isTRUE(is_inj))remDr$findElement("name", "injured")$clickElement()
 }
 
@@ -234,7 +246,7 @@ set_injured <- function(is_inj) {
 #' 
 #' @param is_sick A Boolean
 #' 
-set_sick <- function(is_sick) {
+set_sick <- function(remDr, is_sick) {
   if (isTRUE(is_sick))remDr$findElement("name", "sick")$clickElement()
 }
 
@@ -242,7 +254,7 @@ set_sick <- function(is_sick) {
 #' 
 #' @param is_rest_day A Boolean
 #' 
-set_rest_day <- function(is_rest_day) {
+set_rest_day <- function(remDr, is_rest_day) {
   if (isTRUE(is_rest_day))remDr$findElement("name", "restday")$clickElement()
 }
 
@@ -250,7 +262,7 @@ set_rest_day <- function(is_rest_day) {
 #' 
 #' @param desc A String with simple HTML
 #' 
-set_desc <- function(desc) {
+set_desc <- function(remDr, desc) {
   remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/textarea")$
     sendKeysToElement(list(toString(desc)))
 }

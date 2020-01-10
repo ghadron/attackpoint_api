@@ -6,16 +6,26 @@
 #' @param docker_port A Port Number
 #' @param browser_name A String
 #' 
-init_remDr <- function(docker_port = 4445L, browser_name = "firefox") {
+init_remDr <- function(docker_port = 4445L, 
+                       browser_name = "firefox") {
+  # init_remDr <- RSelenium::remoteDriver(
+  #   browserName = browser_name,
+  #   remoteServerAddr = "localhost", 
+  #   port = docker_port,
+  #   extraCapbilities = RSelenium::makeFirefoxProfile(list(
+  #     browser.download.dir = "~/Projects/Programs/attackpoint_api/training_csv/",
+  #     browser.helperApps.neverAsk.saveToDisk = "csv"
+  #   ))
+  # )
+  
   init_remDr <- remoteDriver(
-    remoteServerAddr = "localhost", 
-    port = docker_port, 
-    browserName = browser_name,
-    browser.download.dir = "~/Projects/Programs/attackpoint_api/training_csv/"
-    browser.helperApps.neverAsk.saveToDisk = "csv")
+    remoteServerAddr = "localhost",
+    port = docker_port,
+    browserName = browser_name
+  )
   
   init_remDr$open()
-  remDr <<- init_remDr
+  return(init_remDr)
 }
 
 

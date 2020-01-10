@@ -1,9 +1,9 @@
 library(RSelenium)
 library(magrittr)
 
-source("ap_selenium.R")
+source("ap_selenium_setup.R")
 source("add_training.R")
-source("add_shoes.R")
+source("ap_shoes.R")
 
 #' docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
 #' username: Hadron Helper
@@ -20,14 +20,20 @@ source("add_shoes.R")
 #' @export
 #' 
 #' @examples
-init_attackpoint <- function(username, password, docker_port = 4445L,
+#' 
+init_attackpoint <- function(usr,
+                             psw, 
+                             docker_port = 4445L,
                              browser_name = "firefox") {
-  if(missing(username) || is.null(username)) error("username required")
-  if(missing(password) || is.null(password)) error("password required")
+  if(missing(usr) || is.null(usr)) error("username required")
+  if(missing(psw) || is.null(psw)) error("password required")
   
-  init_remDr(docker_port)
+  remDr <- init_remDr(docker_port)
   
-  if(try_login(username, password)) username
+  if(try_login(usr, psw)) {
+    print(usr)
+    return(remDr)
+  }
   else "Login Fail"
 }
 
@@ -53,12 +59,23 @@ init_attackpoint <- function(username, password, docker_port = 4445L,
 #' 
 #' @examples
 #'
-add_training <- function(duration, date = NULL, time = NULL, activity = NULL, 
-                         workout = "Training", intensity = 3, distance = NULL, 
-                         climb = NULL, avg_heart_rate = NULL, 
-                         max_heart_rate = NULL, rest_heart_rate = NULL, 
-                         sleep = NULL, weight = NULL, is_injured = FALSE, 
-                         is_sick = FALSE, is_rest_day = FALSE, 
+add_training <- function(remDr,
+                         duration, 
+                         date = NULL, 
+                         time = NULL, 
+                         activity = NULL, 
+                         workout = "Training", 
+                         intensity = 3, 
+                         distance = NULL, 
+                         climb = NULL, 
+                         avg_heart_rate = NULL, 
+                         max_heart_rate = NULL, 
+                         rest_heart_rate = NULL, 
+                         sleep = NULL, 
+                         weight = NULL, 
+                         is_injured = FALSE, 
+                         is_sick = FALSE, 
+                         is_rest_day = FALSE, 
                          description = NULL) {
   
   try_add_training(duration, date = date, time = time, act = activity, 
@@ -79,7 +96,10 @@ add_training <- function(duration, date = NULL, time = NULL, activity = NULL,
 #'
 #' @examples 
 #'
-add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0, 
+add_shoes <- function(remDr,
+                      shoe_name, 
+                      new_date = NULL, 
+                      init_miles = 0, 
                       is_retired = FALSE) {
   try_add_shoes(shoe_name = shoe_name, new_date = new_date, 
                 init_miles = init_miles, is_retired = is_retired)

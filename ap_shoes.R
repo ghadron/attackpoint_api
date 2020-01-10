@@ -7,27 +7,26 @@
 #'
 #' @examples 
 #'
-try_add_shoes <- function(shoe_name, new_date = NULL, init_miles = 0, 
+try_add_shoes <- function(remDr, 
+                          shoe_name,
+                          new_date = NULL, 
+                          init_miles = 0, 
                           is_retired = FALSE) {
   remDr$navigate("https://www.attackpoint.org/editshoes.jsp")
-  remDr$findElement("name", "name")$sendKeysToElement(list(toString(shoe_name)))
-  set_new_date(new_date)
-  set_init_miles(init_miles)
+  remDr$findElement("name", "name")$
+    sendKeysToElement(list(toString(shoe_name)))
+  set_new_date(remDr, new_date)
+  set_init_miles(remDr, init_miles)
   if(isTRUE(is_retired))remDr$findElement("name", "retired")$clickElement()
   remDr$findElement("xpath", "/html/body/div[1]/div[4]/form/p/input")$
     clickElement()
 }
 
-# try_edit_shoes <- function(shoe_name, new_date = NULL, init_miles, 
-#                            is_retired=FALSE) {
-#   
-# }
-
 #' Sets the shoes new date
 #' 
 #' @param new_date A Date
 #' 
-set_new_date <- function(new_date) {
+set_new_date <- function(remDr, new_date) {
   if(is.null(new_date) | is.na(new_date))return()
   
   month_option_xpath <- 
@@ -48,7 +47,7 @@ set_new_date <- function(new_date) {
 #'
 #' @param init_miles A Number >= 0
 #'
-set_init_miles <- function(init_miles) {
+set_init_miles <- function(remDr, init_miles) {
   if (!(length(init_miles) > 0 & is.numeric(init_miles))) {
     stop(paste(init_miles, "is not a number"))
   } else if (init_miles < 0)stop(paste(init_miles, "is not positive"))
