@@ -1,5 +1,6 @@
 library(RSelenium)
 library(magrittr)
+library(XML)
 
 source("ap_selenium_setup.R")
 source("add_training.R")
@@ -35,6 +36,21 @@ init_attackpoint <- function(usr,
     return(remDr)
   }
   else "Login Fail"
+}
+
+get_username <- function(remDr) {
+  ap_home_url <- "www.attackpoint.org"
+  doc <- htmlTreeParse(ap_home_url, useInternal = T)
+  xpathSApply(doc, "<strong>", xmlGetAttr, "strong")
+  
+}
+
+ap_login <- function(remDr) {
+  if(ap_is_logged_in()) {
+    
+  } else {
+    
+  }
 }
 
 #' Fills out the "Add Training" form on Attackpoint

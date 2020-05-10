@@ -1,4 +1,3 @@
-
 #' Creates and open a remote driver on docker through the given port that is 
 #' defaulted to 4445 and on a browser defualted to firefox. This is set to the 
 #' global environment in remDr for use in all other function
@@ -38,13 +37,14 @@ init_remDr <- function(docker_port = 4445L,
 #' @export
 #'
 #' @examples
-try_login <- function(username, password) {
-  remDr$navigate("https://www.attackpoint.org/login.jsp?returl=https%3A%2F%2Fwww.attackpoint.org%2F")
+try_login <- function(remDr, usr, psw) {
+  login_url <- "www.attackpoint.org/login.jsp?returl=https%3A%2F%2Fwww.attackpoint.org%2F"
+  remDr$navigate(login_url)
   
-  remDr$findElement("name", "username")$sendKeysToElement(list(username))
+  remDr$findElement("name", "username")$sendKeysToElement(list(usr))
   remDr$findElement("name", "password")$
-    sendKeysToElement(list(password, key = "enter"))
+    sendKeysToElement(list(psw, key = "enter"))
   
-  remDr$getCurrentUrl() == "https://www.attackpoint.org/"
+  remDr$getCurrentUrl() == "www.attackpoint.org"
 }
 
