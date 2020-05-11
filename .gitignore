@@ -2,5 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+.DS_Store
 ap_landing.html
 attackpoint_api.Rproj
