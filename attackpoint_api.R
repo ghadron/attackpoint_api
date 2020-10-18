@@ -31,7 +31,7 @@ init_attackpoint <- function(usr,
   
   remDr <- init_remDr(docker_port)
   
-  if(try_login(usr, psw)) {
+  if(try_login(remDr, usr, psw)) {
     print(usr)
     return(remDr)
   }
@@ -39,18 +39,16 @@ init_attackpoint <- function(usr,
 }
 
 get_username <- function(remDr) {
-  ap_home_url <- "www.attackpoint.org"
-  doc <- htmlTreeParse(ap_home_url, useInternal = T)
-  xpathSApply(doc, "<strong>", xmlGetAttr, "strong")
+  ap_home_url <- "https://www.attackpoint.org"
+  remDr$navigate(ap_home_url)
   
-}
-
-ap_login <- function(remDr) {
-  if(ap_is_logged_in()) {
-    
-  } else {
-    
-  }
+  usr <- remDr$findElement("xpath", "/html/body/div[1]/div[1]/div/strong")
+  
+  print(usr)
+  
+  # doc <- htmlTreeParse(ap_home_url, useInternal = T)
+  # xpathSApply(doc, "<strong>", xmlGetAttr, "strong")
+  
 }
 
 #' Fills out the "Add Training" form on Attackpoint
