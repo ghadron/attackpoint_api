@@ -39,16 +39,12 @@ init_attackpoint <- function(usr,
 }
 
 get_username <- function(remDr) {
-  ap_home_url <- "https://www.attackpoint.org"
+  ap_home_url <- "https://www.attackpoint.org/editprofile.jsp"
   remDr$navigate(ap_home_url)
   
-  usr <- remDr$findElement("xpath", "/html/body/div[1]/div[1]/div/strong")
+  usr <- remDr$findElement("name", "username")
   
-  print(usr)
-  
-  # doc <- htmlTreeParse(ap_home_url, useInternal = T)
-  # xpathSApply(doc, "<strong>", xmlGetAttr, "strong")
-  
+  usr$getElementAttribute("value")[[1]]
 }
 
 #' Fills out the "Add Training" form on Attackpoint
@@ -117,6 +113,5 @@ add_shoes <- function(remDr,
                       is_retired = FALSE) {
   try_add_shoes(shoe_name = shoe_name, new_date = new_date, 
                 init_miles = init_miles, is_retired = is_retired)
-  
 }
 
