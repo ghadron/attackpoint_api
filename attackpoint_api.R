@@ -11,7 +11,7 @@ source("ap_shoes.R")
 #' password: copper12
 
 #' Initializes a session in a user's account on Attackpoint by attempting to 
-#' login. If this succedes the username is returned if it fails then "Login
+#' login. If this succeeds the username is returned if it fails then "Login
 #' Fail" is returned
 #' 
 #' @param username A String
@@ -41,9 +41,7 @@ init_attackpoint <- function(usr,
 get_username <- function(remDr) {
   ap_home_url <- "https://www.attackpoint.org/editprofile.jsp"
   remDr$navigate(ap_home_url)
-  
   usr <- remDr$findElement("name", "username")
-  
   usr$getElementAttribute("value")[[1]]
 }
 
@@ -87,12 +85,11 @@ add_training <- function(remDr,
                          is_sick = FALSE, 
                          is_rest_day = FALSE, 
                          description = NULL) {
-  
-  try_add_training(duration, date = date, time = time, act = activity, 
+  try_add_training(remDr, duration, date = date, time = time, act = activity, 
                    workout = workout, intensity = intensity, dist = distance, 
                    climb = climb, avg_hr = avg_heart_rate, 
                    max_hr = max_heart_rate, rest_hr = rest_heart_rate, 
-                   sleep = sleep, weight = weight, is_injured = is_injured, 
+                   sleep = sleep, weight = weight, is_inj = is_injured, 
                    is_sick = is_sick, is_rest_day = is_rest_day, 
                    desc = description)
 }
