@@ -5,7 +5,6 @@ get_training_csv <- function(remDr,
   if (is.null(end_date)) end_date <- as.Date(Sys.Date())
   
   remDr$navigate("https://www.attackpoint.org/reports.jsp?")
-  
   set_start_date(remDr, start_date)
   set_end_date(remDr, end_date)
   

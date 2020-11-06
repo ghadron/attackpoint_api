@@ -40,7 +40,6 @@ init_remDr <- function(docker_port = 4445L,
 try_login <- function(remDr, usr, psw) {
   login_url <- "https://www.attackpoint.org/login.jsp?returl=https%3A%2F%2Fwww.attackpoint.org%2F"
   remDr$navigate(login_url)
-
   
   remDr$findElement("name", "username")$sendKeysToElement(list(usr))
   remDr$findElement("name", "password")$

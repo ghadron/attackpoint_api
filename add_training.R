@@ -120,7 +120,10 @@ set_act <- function(remDr, act) {
   
   end_of_acts <- "New Type (enter here-->)"
   while (act_type$getElementText() != end_of_acts) {
-    s
+    if (act_type$getElementText() == act) {
+      act_type$clickElement()
+      return()
+    }
     
     option_pos <- option_pos + 1
     act_type <- 
