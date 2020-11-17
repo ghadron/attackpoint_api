@@ -108,7 +108,7 @@ add_shoes <- function(remDr,
                       new_date = NULL, 
                       init_miles = 0, 
                       is_retired = FALSE) {
-  try_add_shoes(shoe_name = shoe_name, new_date = new_date, 
+  try_add_shoes(remDr = remDr, shoe_name = shoe_name, new_date = new_date, 
                 init_miles = init_miles, is_retired = is_retired)
 }
 
