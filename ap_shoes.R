@@ -103,13 +103,10 @@ get_shoe_data <- function(remDr, shoe_id) {
           sep = "")
   remDr$navigate(ap_edit_shoes_url)
   
-  # print(remDr$findElement("name", "name")$getText())
-  
-  
+  # print(remDr$findElement("name", "name")$getElementText())
+
   retired_checkbox <- remDr$findElement("name", "retired")
-  is_retired <- retired_checkbox$isSelected()
-  
-  print(is_retired)
+  is_retired <- retired_checkbox$isElementSelected()
   
   
   ap_edit_shoes_url
