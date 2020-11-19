@@ -1,4 +1,5 @@
 library(magrittr)
+library(stringr)
 
 #' Fills out the "Add/Edit Shoes" form for adding a new pair of shoes
 #'
@@ -82,6 +83,35 @@ get_shoes <- function(remDr,
   }
   
   shoe_table
-  
-  
 }
+
+get_shoes_id <- function(remDr) {
+  ap_shoes_url <- "https://www.attackpoint.org/shoes.jsp"
+  remDr$navigate(ap_shoes_url)
+  
+  pg_html <- remDr$getPageSource()[[1]]
+  shoesid_pos <- data.frame(str_locate_all(pg_html, "shoesid"))
+  
+  shoes_id <- str_sub(pg_html, shoesid_pos$end + 2, shoesid_pos$end + 6)
+  
+  shoes_id
+}
+
+get_shoe_data <- function(remDr, shoe_id) {
+  ap_edit_shoes_url <- 
+    paste("https://www.attackpoint.org/editshoes.jsp?shoesid=", shoe_id, 
+          sep = "")
+  remDr$navigate(ap_edit_shoes_url)
+  
+  # print(remDr$findElement("name", "name")$getText())
+  
+  
+  retired_checkbox <- remDr$findElement("name", "retired")
+  is_retired <- retired_checkbox$isSelected()
+  
+  print(is_retired)
+  
+  
+  ap_edit_shoes_url
+}
+
