@@ -61,11 +61,7 @@ set_init_miles <- function(remDr, init_miles) {
     sendKeysToElement(list(toString(init_miles)))
 }
 
-get_shoes <- function(remDr, 
-                      shoe_name = NULL,
-                      new_date = NULL, 
-                      init_miles = NULL, 
-                      is_retired = NULL) {
+get_shoes <- function(remDr) {
   ap_shoes_url <- "https://www.attackpoint.org/shoes.jsp"
   remDr$navigate(ap_shoes_url)
   
@@ -110,6 +106,9 @@ get_shoe_data <- function(remDr, shoe_id) {
                          getElementAttribute("value")[[1]], base = 10)
   
   is_retired <- remDr$findElement("name", "retired")$isElementSelected()[[1]]
+  
+  notes <- remDr$findElement("name", "description")
+  print(notes)
   
   ap_edit_shoes_url
 }
