@@ -107,9 +107,9 @@ get_shoe_data <- function(remDr, shoe_id) {
   
   is_retired <- remDr$findElement("name", "retired")$isElementSelected()[[1]]
   
-  notes <- remDr$findElement("name", "description")
-  print(notes)
+  # notes <- remDr$findElement("name", "description")
   
-  ap_edit_shoes_url
+  shoe_data <- c(name, init_miles, is_retired)
+  shoe_data
 }
 
