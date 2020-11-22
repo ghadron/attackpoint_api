@@ -1,3 +1,5 @@
+library(stringr)
+
 
 get_profile_data <- function(remDr) {
     ap_profile_url <- "https://www.attackpoint.org/editprofile.jsp"
@@ -24,10 +26,29 @@ get_profile_data <- function(remDr) {
     gender <- remDr$findElement("name", "gender")$
         getElementAttribute("value")[[1]]
     
-    print(gender)
+    primay_sportid <- remDr$findElement("name", "primarysportid")$
+        getElementAttribute("value")[[1]]
+    
+    pg_html <- remDr$getPageSource()[[1]]
+    prim_sportid_pos <- str_locate(pg_html, "name=\"primarysportid\"")
+    
+    # prim_sportid_pos_regex <- str_locate(pg_html, name=\"primarysportid\")
+    
+    prim_sportid_pos_regex <- grep()
+    
+    prim_sportid_opt<- str_sub(pg_html, prim_sportid_pos$end, shoesid_pos$end + 6)
+    
     
     # first_name_public <- remDr$findElement("name", "showflags")$
     #     isElementSelected()[[1]]
     
-    profile_data <- c(usr_name)
+    profile_data <- list(usr_name = usr_name,
+                         first_name = first_name,
+                         last_name = last_name,
+                         birth_year = birth_year,
+                         sportid_number = sportid_number,
+                         height = height,
+                         gender = gender)
+    
+    # profile_data
 }
