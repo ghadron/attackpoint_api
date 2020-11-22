@@ -5,6 +5,7 @@ library(XML)
 source("ap_selenium_setup.R")
 source("add_training.R")
 source("ap_shoes.R")
+source("ap_profile.R")
 
 #' docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
 #' username: Hadron Helper
