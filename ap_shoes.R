@@ -87,7 +87,6 @@ get_shoes_id <- function(remDr) {
   
   pg_html <- remDr$getPageSource()[[1]]
   shoesid_pos <- data.frame(str_locate_all(pg_html, "shoesid"))
-  
   shoes_id <- str_sub(pg_html, shoesid_pos$end + 2, shoesid_pos$end + 6)
   
   shoes_id
@@ -107,9 +106,10 @@ get_shoe_data <- function(remDr, shoe_id) {
   
   is_retired <- remDr$findElement("name", "retired")$isElementSelected()[[1]]
   
-  # notes <- remDr$findElement("name", "description")
+  shoe_data <- list(name = name,
+                    init_miles = init_miles,
+                    is_retired = is_retired)
   
-  shoe_data <- c(name, init_miles, is_retired)
   shoe_data
 }
 
