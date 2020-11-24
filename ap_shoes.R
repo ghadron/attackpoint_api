@@ -61,6 +61,10 @@ set_init_miles <- function(remDr, init_miles) {
     sendKeysToElement(list(toString(init_miles)))
 }
 
+#' Returns data for all shoes logged by user
+#'
+#' @return A Data frame
+#'
 get_shoes <- function(remDr) {
   ap_shoes_url <- "https://www.attackpoint.org/shoes.jsp"
   remDr$navigate(ap_shoes_url)
@@ -81,6 +85,11 @@ get_shoes <- function(remDr) {
   shoe_table
 }
 
+#' Returns the id's of all shoes. This id is the url extension of the shoe when
+#' editing the initial data and is unique for all shoes in Attackpoint
+#'
+#' @return A Data Frame
+#'
 get_shoes_id <- function(remDr) {
   ap_shoes_url <- "https://www.attackpoint.org/shoes.jsp"
   remDr$navigate(ap_shoes_url)
@@ -90,9 +99,16 @@ get_shoes_id <- function(remDr) {
   shoes_id <- str_sub(pg_html, shoesid_pos$end + 2, shoesid_pos$end + 6)
   
   shoes_id
+
 }
 
-get_shoe_data <- function(remDr, shoe_id) {
+#' Returns the initial data of a given shoe identified with the given shoe id. 
+#'
+#' @param shoe_id A String
+#'
+#' @return A List
+#'
+get_shoe_init_data <- function(remDr, shoe_id) {
   ap_edit_shoes_url <- 
     paste("https://www.attackpoint.org/editshoes.jsp?shoesid=", shoe_id, 
           sep = "")
