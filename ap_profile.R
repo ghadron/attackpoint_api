@@ -1,6 +1,9 @@
 library(stringr)
 
-
+#' Returns a list of profile data of user logged into remDr
+#'
+#' @return A List
+#'
 get_profile_data <- function(remDr) {
     ap_profile_url <- "https://www.attackpoint.org/editprofile.jsp"
     remDr$navigate(ap_profile_url)
@@ -50,5 +53,20 @@ get_profile_data <- function(remDr) {
                          height = height,
                          gender = gender)
     
-    # profile_data
+    profile_data
 }
+
+get_activity_types <- function(remDr) {
+    ap_act_type_url <- "https://www.attackpoint.org/editactivitytypes.jsp"
+    remDr$navigate(ap_profile_url)
+    
+    index = 1
+    name <- paste("name", index, sep = "")
+        
+    act <- remDr$findElement("name", name)
+    
+    print(act$getAttribute("value))
+
+    
+}
+
