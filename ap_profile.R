@@ -35,13 +35,6 @@ get_profile_data <- function(remDr) {
     pg_html <- remDr$getPageSource()[[1]]
     prim_sportid_pos <- str_locate(pg_html, "name=\"primarysportid\"")
     
-    # prim_sportid_pos_regex <- str_locate(pg_html, name=\"primarysportid\")
-    
-    prim_sportid_pos_regex <- grep()
-    
-    prim_sportid_opt<- str_sub(pg_html, prim_sportid_pos$end, shoesid_pos$end + 6)
-    
-    
     # first_name_public <- remDr$findElement("name", "showflags")$
     #     isElementSelected()[[1]]
     
@@ -58,15 +51,29 @@ get_profile_data <- function(remDr) {
 
 get_activity_types <- function(remDr) {
     ap_act_type_url <- "https://www.attackpoint.org/editactivitytypes.jsp"
-    remDr$navigate(ap_profile_url)
-    
-    index = 1
-    name <- paste("name", index, sep = "")
-        
-    act <- remDr$findElement("name", name)
-    
-    print(act$getAttribute("value))
+    remDr$navigate(ap_act_type_url)
 
+    next_act <- TRUE
+    index <- 0
+    acts <- c()
     
+    while (next_act) {
+        index <- index + 1
+        name <- paste("name", index, sep = "")
+        act <- tryCatch({
+                remDr$findElement("name", name)
+            }, error = function(e) {
+                return (NA)
+            }, warning = function(w){}
+        )
+        
+        if (is.na(act)) {
+            next_act = FALSE
+        } else {
+            acts <- append(acts, act$getElementAttribute("value")[[1]])
+        }
+    }
+    
+    return(acts)
 }
 
